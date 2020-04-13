@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>添加员工信息</h2>
+<table class="table table-bordered">
+    <tr>
+        <td>姓名</td>
+        <td>
+            <input id="name" type="text" />
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>性别</td>
+        <td>
+            <input id="Radio1" type="radio" name="sex" />
+            <input id="Radio1" type="radio" name="sex" />
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>年龄</td>
+        <td>
+            <input id="age" type="text" />
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>联系方式</td>
+        <td>
+            <input id="phone" type="text" />
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>登记日期</td>
+        <td>
+            <input id="time" type="text" />
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input id="Submit1" type="submit" value="提交" onclick="Add()" class="btn btn-primary" /></td>
+        <td></td>
+    </tr>
+</table>
+@section scripts{
+    <script>
+        function Add() {
+            var obj = {};
+            obj.Name = $("#name").val();
+            obj.Sex = Radio1.checked;
+            obj.Age = $("#age").val();
+            obj.Phone = $("#phone").val();
+            obj.Time = $("#time").val();
+            $.ajax({
+                url: 'http://localhost:62401/api/Add',
+                type: 'post',
+                datType: 'json',
+                data: obj,
+                success: function (d) {
+                    if (d > 0) {
+                        alert("添加成功");
+                        location.href = '/TAPD/Show';
+                    }
+                    alert("添加失败");
+                }
+
+
+            })
+        }
+    </script>
+}

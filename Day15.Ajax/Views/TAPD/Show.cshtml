@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>显示员工信息</h2>
+@using (Html.BeginForm())
+{
+    <span>标题</span>
+    <input id="Text1" type="text" name="name" />
+    <input id="Submit1" type="submit" value="查询" />
+}
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>年龄</th>
+            <th>联系方式</th>
+            <th>登记日期</th>
+            <th>
+                操作
+
+            </th>
+        </tr>
+    </thead>
+    <tbody id="tb"> </tbody>
+</table>
+@section scripts{
+    <script>
+        $(function () {
+            show();
+        })
+        function show() {
+            $.ajax({
+                url: 'http://localhost:62401/api/',
+                type: 'get',
+                dataType: 'json',
+                success: function (d) {
+                    $("#tb").empty();
+                    $(d).each(function () {
+                        var line = '<tr>'
+                            + '<td>' + this.ID + '</td>'
+                            + '<td>' + this.Name + '</td>'
+                            + '<td>' + this.Age + '</td>'
+                            + '<td>' + this.Sex + '</td>'
+                            + '<td>' + this.Phone + '</td>'
+                            + '<td>' + this.Time + '</td>'
+                            + '<td>' + '<a value=' + this.ID + '>删除</a>'
+                            + '<a href="/TAPD/Upt" value=' + this.ID + '>修改</a>'
+                            + '</td>'
+                            + '</tr>'
+                        $("#tb").append(line);
+                    })
+                }
+
+            })
+        }
+        function Del(id) {
+            $.ajax({
+                url: 'http://localhost:62401/api/' + id,
+                type: 'delte',
+                dataType: 'json',
+                success: function (d) {
+                    if (d > 0) {
+                        alert("删除成功");
+                        location.href = '/TAPD/Show';
+                    }
+                    alert("删除失败");
+                }
+            })
+
+        }
+    </script>
+
+}
+

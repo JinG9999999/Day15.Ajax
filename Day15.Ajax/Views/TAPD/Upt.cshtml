@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "Upt";
+}
+
+<h2>修改界面</h2>
+<table class="table table-bordered">
+    <tr>
+        <td>姓名</td>
+        <td>
+            <input id="name" type="text" />
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>性别</td>
+        <td>
+            <input id="Radio1" type="radio" name="sex"  value="true"/>男
+            <input id="Radio1" type="radio" name="sex" value="false" />女
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>年龄</td>
+        <td>
+            <input id="age" type="text" />
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>联系方式</td>
+        <td>
+            <input id="phone" type="text" />
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>登记日期</td>
+        <td>
+            <input id="time" type="text" />
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input id="Submit1" type="submit" value="提交" onclick="Upt()" class="btn btn-primary" /></td>
+        <td></td>
+    </tr>
+</table>
+@section scripts{
+    <script>
+        $(function () {
+            show();
+        })
+        function show() {
+            $.ajax({
+                url: 'http://localhost:62401/api/',
+                type: 'get',
+                dataType: 'json',
+                success: function (d) {
+                    $(d).each(function () {
+                        $("#name").val(d.Name);
+                        $("#Radio1").val(d.Sex);
+                        $("#age").val(d.Age);
+                        $("#phone").val(d.Phone);
+                        $("#time").val(d.Time);
+                    })
+                }
+
+            })
+        }
+
+    function Upt() {
+        var obj = {},
+        obj.Name = $("#name").val();
+        obj.Sex = Radio1.checked;
+        obj.Age = $("#age").val();
+        obj.Phone = $("#phone").val();
+        obj.Time = $("#time").val();
+        $.ajax({
+            url: 'http://localhost:62401/api/Add',
+            type: 'put',
+            datType: 'json',
+            data: obj,
+            success: function (d) {
+                if (d > 0) {
+                    alert("修改成功");
+                    location.href = '/TAPD/Show';
+                }
+                alert("修改失败");
+            }
+
+
+        })
+    }
+    </script>
+    }
+
